@@ -41,3 +41,5 @@ export function delBatchCategory(ids) {
     }
   })
 }
+
+export const IMPORT_CATEGORY = '/category/upload'

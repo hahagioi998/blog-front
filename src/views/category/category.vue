@@ -5,7 +5,28 @@
         <el-input v-model="formInline.cateName" placeholder="请输入栏目名称"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="getData" icon="el-icon-search">搜索</el-button>
+        <el-button type="primary" @click="getData" icon="el-icon-search">
+          搜索
+        </el-button>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" icon="el-icon-download" @click="handleDownload">
+          导出 Excel
+        </el-button>
+      </el-form-item>
+      <el-form-item>
+        <el-upload
+            :show-file-list="false"
+            name="file"
+            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+            :on-success="onSuccessUpload"
+            :on-error="onError"
+            :action="action">
+          <el-button type="primary" icon="el-icon-upload2">
+            导入 Excel
+          </el-button>
+        </el-upload>
+
       </el-form-item>
     </el-form>
 
@@ -27,9 +48,15 @@
 <script>
 
   import editTable from '@/components/EditTable'
-  import qs from 'qs'
-  import axios from 'axios'
-  import {getData ,getDataByCdt, addCategory , updCategory ,delCategory ,delBatchCategory} from '@/api/category'
+  import {
+    getData,
+    getDataByCdt,
+    addCategory,
+    updCategory,
+    delCategory,
+    delBatchCategory,
+    IMPORT_CATEGORY
+  } from '@/api/category' //
 
   export default {
     name: "category",
@@ -67,15 +94,63 @@
         page: {
           pageNum: 1,
           pageSize: 10,
-        }
+        },
+        filename: '栏目列表',
+        autoWidth: true,
+        bookType: 'xlsx',
+        action: IMPORT_CATEGORY
       }
     },
     mounted() {
       this.getData();
     },
     methods: {
+      handleDownload() {
+        import('@/vendor/Export2Excel').then(excel => {
+          const tHeader = ['序号(id)','栏目名称(cateName)', '发布时间(date)']
+          const filterVal = ['cateName', 'date']
+          const list = this.tableData
+          const data = this.formatJson(filterVal, list) // 自行洗数据 按序排序的一个array数组
+          console.log(data);
+          data.forEach((v, i) => v.unshift(i+1))
+
+          excel.export_json_to_excel({
+            header: tHeader, //导出数据的表头
+            data,
+            filename: this.filename,
+            autoWidth: this.autoWidth,
+            bookType: this.bookType //导出文件类型
+          })
+        })
+      },
+      onSuccessUpload(res) {
+        if (res.success) {
+          this.$message.success("导入成功");
+          setTimeout(() => {
+            // 刷新子组件的数据。
+            this.$router.go(0);
+          }, 2 * 1000);
+        } else {
+          this.$message.error(res.message);
+        }
+      },
+      onError(error) {
+        this.$message.error(error.message)
+      },
+      formatJson(filterVal, jsonData) {
+        return jsonData.map(v => filterVal.map(j => {
+          if (j === 'timestamp') {
+            return parseTime(v[j])
+          } else {
+            return v[j]
+          }
+        }))
+      },
+      formatJsonAddIndex(jsonData) {
+        jsonData.forEach((v, i) =>  v.unshift(i+1))
+      },
       getData() {
-        const params= {
+        const params = {
           ...this.page,
           ...this.formInline
         }
@@ -91,53 +166,53 @@
         })
       },
       save(data, done) {
-        if(data.date === null || data.date ==='' || data.date === undefined){
+        if (data.date === null || data.date === '' || data.date === undefined) {
           this.$message.warning("请选择日期")
           return;
         }
         //添加
-        if(data.id === undefined){
+        if (data.id === undefined) {
           done()
-          addCategory(data).then(res=>{
+          addCategory(data).then(res => {
             if (res.success) {
               this.$message.success("添加成功")
               this.getData();
             }
-          }).catch(e=>{
+          }).catch(e => {
             this.$message.error(e.message)
           })
-        }else{
+        } else {
           done()
-          updCategory(data).then(res=>{
-            if(res.success){
+          updCategory(data).then(res => {
+            if (res.success) {
               this.$message.success("修改成功")
             }
-          }).catch(e=>{
+          }).catch(e => {
             this.$message.error(e.message)
           })
         }
       },
-      delRow(id){
-        delCategory(id).then(res=>{
-          if(res.success){
+      delRow(id) {
+        delCategory(id).then(res => {
+          if (res.success) {
             this.$message.success("删除成功")
             this.getData();
-          }else{
+          } else {
             this.$message.error(res.message)
           }
-        }).catch(e=>{
+        }).catch(e => {
           this.$message.error(e.message)
         })
       },
-      delBatch(ids){
-        delBatchCategory(ids).then(res=>{
-          if(res.success){
+      delBatch(ids) {
+        delBatchCategory(ids).then(res => {
+          if (res.success) {
             this.$message.success("批量删除成功")
             this.getData();
-          }else{
+          } else {
             this.$message.error(res.message)
           }
-        }).catch(e=>{
+        }).catch(e => {
           this.$message.error(e.message)
         })
       },
@@ -153,7 +228,6 @@
         this.batchBtn = this.objIds.length === 0;
       },
     },
-
   }
 </script>
 
