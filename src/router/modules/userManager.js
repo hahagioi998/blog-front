@@ -19,16 +19,16 @@
 import Layout from '@/layout'
 
 export default {
-  path: '/userManager',
-  component : Layout,
-  // name: 'dataStatistics',
-  // meta:{title:'数据统计',icon:'eye'},
-  children:[
-    {
-      path:'/userManager',
-      name:'userManager',
-      component: () => import('@/views/userManager/userManager'),
-      meta: {title: '用户管理',icon: 'user' }
-    },
-  ]
+    path: '/userManager',
+    component: Layout,
+    // name: 'dataStatistics',
+    // meta:{title:'数据统计',icon:'eye'},
+    children: [
+        {
+            path: '/userManager',
+            name: 'userManager',
+            component: () => import('@/views/userManager/userManager'),
+            meta: {title: '用户管理', icon: 'user', roles: ['admin', 'editor']},
+        },
+    ]
 }

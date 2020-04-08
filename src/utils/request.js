@@ -2,12 +2,13 @@ import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
+import { showLoading, hideLoading, destoryLoading } from '@/utils/loading'
 
 // create an axios instance
 const service = axios.create({
   // baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 3000 // request timeout
+  timeout: 600000 // request timeout
 })
 
 // request interceptor
@@ -28,6 +29,10 @@ service.interceptors.request.use(
        // please modify it according to the actual situation
        config.headers['X-Token'] = getToken()
      }*/
+      // start loading
+      if (!config.noLoading) {
+          showLoading()
+      }
     return config
   },
   error => {
@@ -78,10 +83,13 @@ service.interceptors.response.use(
       // stop loading....
       return res
     }*/
+      // stop loding
+      hideLoading()
     return res;
   },
   error => {
     //  break off loading...
+      destoryLoading()
     console.log('err' + error) // for debug
     Message({
       message: error.message,

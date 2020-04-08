@@ -1,12 +1,14 @@
 import {login, logout, getInfo} from '@/api/user'
-import {getToken, setToken, removeToken} from '@/utils/auth'
+import {getToken, setToken,setTokenTobs, removeToken} from '@/utils/auth'
 import {resetRouter} from '@/router'
 
 const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
-    avatar: ''
+    avatar: '',
+      roles: [],
+      introduction: '',
   }
 }
 
@@ -24,7 +26,13 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
-  }
+  },
+    SET_ROLES: (state, roles) => {
+        state.roles = roles
+    },
+    SET_INTRODUCTION: (state, introduction) => {
+        state.introduction = introduction
+    },
 }
 
 const actions = {
@@ -38,6 +46,8 @@ const actions = {
       }
       commit('SET_TOKEN', data.token)
       setToken(data.token)
+     /*   setTokenTobs('csrftoken','VqP4TydAW3uftdzEVZvxLDhoQXhbvfX2cERSatrl6SAcDUHaUtaMciNn2NMUjHyk')
+        setTokenTobs('sessionid','ep0udvbc02j00he4ghhsycms4qleqk7g')*/
       resolve()
       /*login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
@@ -54,14 +64,16 @@ const actions = {
   getInfo({commit, state}) {
     return new Promise((resolve, reject) => {
       const data = {
-        roles: ['admin'],
+        roles: ['editor'],
         introduction: 'I am a super administrator',
-        avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+        avatar: '@/assets/img/freedom.js',
         name: 'Super Admin'
       }
-      commit('SET_NAME', 'Super Admin')
-      commit('SET_AVATAR', '@/assets/img/freedom.js')
-      resolve(data)
+        commit('SET_NAME',data.name)
+        commit('SET_AVATAR',data.avatar)
+        commit('SET_ROLES', data.roles)
+        commit('SET_INTRODUCTION', data.introduction)
+        resolve(data)
       /* getInfo(state.token).then(response => {
          const {data} = response
 
@@ -87,6 +99,7 @@ const actions = {
         removeToken() // must remove  token  first
         resetRouter()
         commit('RESET_STATE')
+          commit('SET_ROLES', [])
         resolve()
       }).catch(error => {
         reject(error)
