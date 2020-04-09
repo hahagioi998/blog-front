@@ -53,6 +53,10 @@ module.exports = {
             },
             'tobs': {
                 target: 'http://159.226.226.26'
+            },
+            'login':{
+                target: baseURL + ':' + basePORT,
+                // ws: true,
             }
         }
     },

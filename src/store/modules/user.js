@@ -40,23 +40,23 @@ const actions = {
   login({commit}, userInfo) {
     const {username, password} = userInfo
     return new Promise((resolve, reject) => {
-      const data = {
+      /*const data = {
         code: 20000,
         token: 'admin-token',
       }
       commit('SET_TOKEN', data.token)
-      setToken(data.token)
+      setToken(data.token)*/
      /*   setTokenTobs('csrftoken','VqP4TydAW3uftdzEVZvxLDhoQXhbvfX2cERSatrl6SAcDUHaUtaMciNn2NMUjHyk')
         setTokenTobs('sessionid','ep0udvbc02j00he4ghhsycms4qleqk7g')*/
       resolve()
-      /*login({ username: username.trim(), password: password }).then(response => {
+      login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
         commit('SET_TOKEN', data.token)
         setToken(data.token)
         resolve()
       }).catch(error => {
         reject(error)
-      })*/
+      })
     })
   },
 
