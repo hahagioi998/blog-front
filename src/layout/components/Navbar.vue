@@ -54,7 +54,10 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
-      await this.$store.dispatch('user/logout')
+      let newVar = await this.$store.dispatch('user/logout');
+      if(newVar){
+          this.$message.success("注销成功！");
+      }
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
   }

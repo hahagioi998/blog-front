@@ -53,17 +53,12 @@
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
 
 export default {
   name: 'Login',
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
-      } else {
         callback()
-      }
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 3) {
@@ -109,9 +104,11 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.$store.dispatch('user/login', this.loginForm).then((res) => {
-            if(res){
+            if(res.success){
               this.$message.success("登录成功");
               this.$router.push({ path: this.redirect || '/' })
+            }else {
+                this.$message.error(res.message);
             }
           }).catch(() => {
             console.log('error submit!!11111')

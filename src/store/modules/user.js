@@ -45,13 +45,15 @@ const actions = {
      /*   setTokenTobs('csrftoken','VqP4TydAW3uftdzEVZvxLDhoQXhbvfX2cERSatrl6SAcDUHaUtaMciNn2NMUjHyk')
         setTokenTobs('sessionid','ep0udvbc02j00he4ghhsycms4qleqk7g')*/
       login({ username: username.trim(), password: password }).then(response => {
-        let success = response.success;
-        if(success){
+        if(response.success){
           const { data } = response
           commit('SET_TOKEN', data.username)
+            // let maps = (data.authorities).map(item=>{item.authority});
+            // console.log(maps);
+            commit('SET_ROLES',maps)
           setToken(data.username)
         }
-        resolve(success)
+        resolve(response)
       }).catch(error => {
         reject(error)
       })
@@ -72,7 +74,7 @@ const actions = {
       }
         commit('SET_NAME',data.name)
         commit('SET_AVATAR',data.avatar)
-        commit('SET_ROLES', data.roles)
+        // commit('SET_ROLES', data.roles)
         commit('SET_INTRODUCTION', data.introduction)
         resolve(data)
       /* getInfo(state.token).then(response => {
@@ -101,7 +103,7 @@ const actions = {
       resetRouter()
       commit('RESET_STATE')
       commit('SET_ROLES', [])
-      resolve()
+      resolve(true)
    /*   logout(state.token).then(() => {
         removeToken() // must remove  token  first
         resetRouter()
