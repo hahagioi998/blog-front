@@ -108,12 +108,13 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
-            this.loading = false
+          this.$store.dispatch('user/login', this.loginForm).then((res) => {
+            if(res){
+              this.$message.success("登录成功");
+              this.$router.push({ path: this.redirect || '/' })
+            }
           }).catch(() => {
-            this.loading = false
+            console.log('error submit!!11111')
           })
         } else {
           console.log('error submit!!')

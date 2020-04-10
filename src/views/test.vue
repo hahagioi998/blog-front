@@ -16,7 +16,7 @@
 </template>
 
 <script>
-    import {getDataFirst, getDataForName} from '@/api/tobs'
+    // import {getDataFirst, getDataForName} from '@/api/tobs'
     import axios from 'axios'
 
     export default {
@@ -2488,12 +2488,12 @@
                         byyl1: JSON.stringify([this.arr[0]]),
                         qyyl1: JSON.stringify(["正丁醇"])
                     }
-                    await getDataFirst(paramsFirst).then(res => {
+                   /* await getDataFirst(paramsFirst).then(res => {
                         this.htmlValue = res;
                         // this.$message.success("获取数据成功");
                     }).catch(e => {
                         this.$message.error(e.message);
-                    });
+                    });*/
 
 
                     this.createHtml2();
@@ -2579,7 +2579,7 @@
             async getLDData() {
                 for (let i = 0; i < 1; i++) {
                     var params = {'xl_name': '广藿香油'};
-                    await getDataForName(params).then(res => {
+                   /* await getDataForName(params).then(res => {
                         var arr = res;
                         var item = [];
                         item.push('广藿香油');
@@ -2591,7 +2591,7 @@
                         this.result2[i] = item
                     }).catch(e => {
                         this.$message.error(e.message);
-                    })
+                    })*/
                 }
                 console.log(this.result2);
             },

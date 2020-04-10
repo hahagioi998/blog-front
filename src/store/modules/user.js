@@ -40,23 +40,24 @@ const actions = {
   login({commit}, userInfo) {
     const {username, password} = userInfo
     return new Promise((resolve, reject) => {
-      /*const data = {
-        code: 20000,
-        token: 'admin-token',
-      }
-      commit('SET_TOKEN', data.token)
-      setToken(data.token)*/
+
+
      /*   setTokenTobs('csrftoken','VqP4TydAW3uftdzEVZvxLDhoQXhbvfX2cERSatrl6SAcDUHaUtaMciNn2NMUjHyk')
         setTokenTobs('sessionid','ep0udvbc02j00he4ghhsycms4qleqk7g')*/
-      resolve()
       login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
-        resolve()
+        let success = response.success;
+        if(success){
+          const { data } = response
+          commit('SET_TOKEN', data.username)
+          setToken(data.username)
+        }
+        resolve(success)
       }).catch(error => {
         reject(error)
       })
+
+
+
     })
   },
 
@@ -95,15 +96,21 @@ const actions = {
   // user logout
   logout({commit, state}) {
     return new Promise((resolve, reject) => {
-      logout(state.token).then(() => {
+
+      removeToken() // must remove  token  first
+      resetRouter()
+      commit('RESET_STATE')
+      commit('SET_ROLES', [])
+      resolve()
+   /*   logout(state.token).then(() => {
         removeToken() // must remove  token  first
         resetRouter()
         commit('RESET_STATE')
-          commit('SET_ROLES', [])
+        commit('SET_ROLES', [])
         resolve()
       }).catch(error => {
         reject(error)
-      })
+      })*/
     })
   },
 
