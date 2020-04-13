@@ -55,6 +55,7 @@ export default {
     },
     async logout() {
       await this.$store.dispatch('user/logout')
+      this.$message.warning("账号已注销！");
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
   }

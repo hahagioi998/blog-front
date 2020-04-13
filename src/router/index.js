@@ -66,7 +66,7 @@ export const constantRoutes = [
       path: '/test',
       component : ()=> import('@/views/test'),
       meta: {title: '测试页面',icon: 'tree.svg'}
-    }]
+    }] 
   },
 ]
 
