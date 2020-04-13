@@ -32,8 +32,8 @@ module.exports = {
   publicPath: '/',
   outputDir: 'dist',
   assetsDir: 'static',
-  lintOnSave: process.env.NODE_ENV === 'development',
-  // lintOnSave: false,
+  // lintOnSave: process.env.NODE_ENV === 'development',
+  lintOnSave: false,
 
   //sourceMap
   productionSourceMap: false,
@@ -61,14 +61,6 @@ module.exports = {
       },
       'tobs': {
         target: 'http://159.226.226.26'
-      },
-      'login': {
-        target: baseURL + ':' + basePORT,
-        // ws: true,
-      },
-      'logout': {
-        target: baseURL + ':' + basePORT,
-        // ws: true,
       },
 
     }

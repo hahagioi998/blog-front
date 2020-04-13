@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function login(data) {
   return request({
-    url: '/login',
+    url: 'api/login',
     method: 'post',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -29,7 +29,7 @@ export function getInfo(token) {
 
 export function logout() {
   return request({
-    url: '/logout',
+    url: 'api/logout',
     method: 'post'
   })
 }

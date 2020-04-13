@@ -17,3 +17,14 @@ export function removeToken() {
 export function setTokenTobs(key,token) {
     return Cookies.set(key, token)
 }
+
+export function setCookieInfo(key,token) {
+    return Cookies.set(key, token)
+}
+
+export function getCookieInfo(key) {
+    return Cookies.get(key)
+}
+export function removeCookieInfo(key) {
+    return Cookies.remove(key)
+}

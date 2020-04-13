@@ -153,7 +153,7 @@
         const params = {
           ...this.page,
           ...this.formInline
-        }
+        };
         getData(params).then(res => {
           if (res.success) {
             this.tableData = res.data.rows;
