@@ -45,13 +45,20 @@ const actions = {
      /*   setTokenTobs('csrftoken','VqP4TydAW3uftdzEVZvxLDhoQXhbvfX2cERSatrl6SAcDUHaUtaMciNn2NMUjHyk')
         setTokenTobs('sessionid','ep0udvbc02j00he4ghhsycms4qleqk7g')*/
       login({ username: username.trim(), password: password }).then(response => {
-        if(response.success){
-          const { data } = response
+        let success = response.success;
+        if(success){
+          const { data } = response;
           commit('SET_TOKEN', data.username)
-            // let maps = (data.authorities).map(item=>{item.authority});
-            // console.log(maps);
-            commit('SET_ROLES',maps)
+          commit('SET_NAME',data.username)
           setToken(data.username)
+          //avatar
+          commit('SET_AVATAR','@/assets/img/freedom.js')
+          //roles
+          let rolesResult = [];
+          for (let i = 0; i < data.authorities.length; i++) {
+            rolesResult.push(data.authorities[i].authority);
+          }
+          commit('SET_ROLES', rolesResult)
         }
         resolve(response)
       }).catch(error => {
@@ -63,21 +70,22 @@ const actions = {
     })
   },
 
+/*
   // get user info
   getInfo({commit, state}) {
     return new Promise((resolve, reject) => {
       const data = {
-        roles: ['editor'],
+        roles: ['test'],
         introduction: 'I am a super administrator',
         avatar: '@/assets/img/freedom.js',
         name: 'Super Admin'
       }
         commit('SET_NAME',data.name)
         commit('SET_AVATAR',data.avatar)
-        // commit('SET_ROLES', data.roles)
+        commit('SET_ROLES', data.roles)
         commit('SET_INTRODUCTION', data.introduction)
         resolve(data)
-      /* getInfo(state.token).then(response => {
+      /!* getInfo(state.token).then(response => {
          const {data} = response
 
          if (!data) {
@@ -91,20 +99,16 @@ const actions = {
          resolve(data)
        }).catch(error => {
          reject(error)
-       })*/
+       })*!/
     })
   },
+*/
 
   // user logout
   logout({commit, state}) {
     return new Promise((resolve, reject) => {
 
-      removeToken() // must remove  token  first
-      resetRouter()
-      commit('RESET_STATE')
-      commit('SET_ROLES', [])
-      resolve(true)
-   /*   logout(state.token).then(() => {
+      logout().then(() => {
         removeToken() // must remove  token  first
         resetRouter()
         commit('RESET_STATE')
@@ -112,7 +116,7 @@ const actions = {
         resolve()
       }).catch(error => {
         reject(error)
-      })*/
+      })
     })
   },
 

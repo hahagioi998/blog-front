@@ -18,7 +18,6 @@
 <script>
     // import {getDataFirst, getDataForName} from '@/api/tobs'
     import axios from 'axios'
-
     export default {
         name: 'test',
         data() {
@@ -2450,7 +2449,6 @@
           this.doData();
         },
         methods: {
-
             doData(){
                 for (let i = 0; i < this.data1.length; i++) {
                     for (let j = 0; j < this.data2.length; j++) {
@@ -2467,7 +2465,6 @@
                 }
                 console.log(this.data1);
             },
-
 
             remove(arr, val) {
                 var index = arr.indexOf(val);

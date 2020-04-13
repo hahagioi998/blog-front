@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import { validUsername } from '@/utils/validate'
 
 export default {
   name: 'Login',
@@ -104,17 +105,17 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.$store.dispatch('user/login', this.loginForm).then((res) => {
-            if(res.success){
+            if(res.success){ //登录成功。
               this.$message.success("登录成功");
               this.$router.push({ path: this.redirect || '/' })
-            }else {
-                this.$message.error(res.message);
+            }else{
+              this.$message.error(res.message);
             }
           }).catch(() => {
             console.log('error submit!!11111')
           })
         } else {
-          console.log('error submit!!')
+          console.log('error submit!')
           return false
         }
       })
