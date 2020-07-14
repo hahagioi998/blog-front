@@ -19,16 +19,27 @@
 import Layout from '@/layout'
 
 export default {
-    path: '/userManager',
-    component: Layout,
-    // name: 'dataStatistics',
-    // meta:{title:'数据统计',icon:'eye'},
-    children: [
-        {
-            path: '/userManager',
-            name: 'userManager',
-            component: () => import('@/views/userManager/userManager'),
-            meta: {title: '用户管理', icon: 'user', roles: ['admin', 'editor']},
-        },
-    ]
+  path: '/manager',
+  meta:{title:'系统权限管理',icon:'el-icon-user'},
+  component: Layout,
+  children: [
+    {
+      path: '/userManager',
+      name: 'userManager',
+      component: () => import('@/views/userManager/userManager'),
+      meta: {title: '用户管理', icon: 'user', roles: ['admin', 'userManager']},
+    },
+    {
+      path: '/roleManager',
+      name: 'roleManager',
+      component: () => import('@/views/userManager/roleManager'),
+      meta: {title: '角色管理', icon: 'user', roles: ['admin', 'roleManager']},
+    },
+    {
+      path: '/permissionManager',
+      name: 'permissionManager',
+      component: () => import('@/views/userManager/permissionManager'),
+      meta: {title: '权限管理', icon: 'user', roles: ['admin', 'permissionManager']},
+    },
+  ]
 }

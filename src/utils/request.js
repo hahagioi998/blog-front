@@ -3,6 +3,7 @@ import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 import { showLoading, hideLoading, destoryLoading } from '@/utils/loading'
+import qs from 'qs'
 
 // create an axios instance
 const service = axios.create({
@@ -17,6 +18,10 @@ service.interceptors.request.use(
     if(config.method === 'put'){
       config.headers["Content-Type"] = 'application/json'
     }
+/*    if(config.method === 'post'){
+      config.headers["Content-Type"] = 'application/json'
+      config.data = qs.stringify(config.data);
+    }*/
     /* console.log(config);
      //start loading....!config.noLoading   in utils
 

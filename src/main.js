@@ -14,6 +14,9 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 
+//add yourself method
+import utils from './utils/utils.js'
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -22,6 +25,8 @@ import '@/permission' // permission control
  * Currently MockJs will be used in the production environment,
  * please remove it before going online ! ! !
  */
+Vue.prototype.$utils = utils
+
 if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('../mock')
   mockXHR()

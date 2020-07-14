@@ -7,8 +7,8 @@ Vue.use(Router)
 import Layout from '@/layout'
 import article from './modules/article'
 import datastatistics from './modules/datastatistics'
-import userManager from './modules/userManager'
 import category from './modules/category'
+import userManager from './modules/userManager'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -64,9 +64,9 @@ export const constantRoutes = [
     component: Layout,
     children: [{
       path: '/test',
-      component : ()=> import('@/views/test'),
-      meta: {title: '测试页面',icon: 'tree.svg'}
-    }] 
+      component: () => import('@/views/test'),
+      meta: {title: '测试页面', icon: 'tree.svg'}
+    }]
   },
 ]
 
@@ -76,8 +76,8 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   // ...category
-    userManager,
-    {path: '*', redirect: '/404', hidden: true}
+  userManager,
+  {path: '*', redirect: '/404', hidden: true}
 ]
 
 const createRouter = () => new Router({

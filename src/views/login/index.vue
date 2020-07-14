@@ -4,6 +4,8 @@
 
       <div class="title-container">
         <h3 class="title">Login Form</h3>
+        <h4 class="time">账号测试：admin - admin</h4>
+        <h4 class="time">账号测试：test - admin，拒绝访问栏目管理，切缺少用户管理目录</h4>
       </div>
 
       <el-form-item prop="username">
@@ -54,6 +56,7 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
+import {Base64} from 'js-base64'
 
 export default {
   name: 'Login',
@@ -82,6 +85,8 @@ export default {
       redirect: undefined
     }
   },
+    mounted(){
+    },
   watch: {
     $route: {
       handler: function(route) {

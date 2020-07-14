@@ -34,15 +34,41 @@ export function logout() {
   })
 }
 
+export function getData(params) {
+  return request({
+    url: 'api/user/getData',
+    method: 'get',
+    params
+  })
+}
 
-export function add() {
+export function updateUser(item) {
+  return request({
+    url: '/api/user',
+    method: 'put',
+    data: item
+  })
+}
+
+export function saveUser(item) {
   return request({
     url: '/api/user',
     method: 'post',
-    data: [
-      {"username": "freedom1", "password": "123"},
-      {"username": "freedom1", "password": "123"},
-      {"username": "freedom1", "password": "123"},
-    ]
+    data: item
+  })
+}
+
+export function deleteUser(id) {
+  return request({
+    url: `/api/user/${id}`,
+    method: 'delete',
+  })
+}
+
+export function delBatchUser(ids) {
+  return request({
+    url: `/api/user/batchDelete`,
+    method: 'delete',
+    params: {ids: ids + ''}
   })
 }
