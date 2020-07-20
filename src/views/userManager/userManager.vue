@@ -85,6 +85,15 @@
         formInline: {
           userName: ''
         },
+        //权限
+        authority: true,
+        //分页
+        total: 0,
+        page: {
+          pageNum: 1,
+          pageSize: 10,
+        },
+
         //分配角色
         userId: '',
         dialogVisible: false,
@@ -102,14 +111,7 @@
             label: '是否可用',
             prop: 'status'
           }*/],
-        //权限
-        authority: true,
-        //分页
-        total: 0,
-        page: {
-          pageNum: 1,
-          pageSize: 10,
-        },
+
       }
     },
     mounted() {
@@ -133,9 +135,9 @@
         })
       },
       save(data, done) {
+        done();
         //添加
         if(data.id === undefined){
-          done();
           saveUser(data).then(res=>{
             if(res.success){
               this.$message.success(res.message)
@@ -145,7 +147,6 @@
             this.$message.error(e.message)
           })
         }else{
-          done();
           //更新
           updateUser(data).then(res=>{
             if(res.success){
@@ -167,7 +168,6 @@
         })
       },
       delBatch(ids) {
-        console.log(ids);
         delBatchUser(ids).then(res=>{
           if(res.success){
             this.$message.success(res.message);

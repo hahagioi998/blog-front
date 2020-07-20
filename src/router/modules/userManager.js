@@ -20,7 +20,7 @@ import Layout from '@/layout'
 
 export default {
   path: '/manager',
-  meta:{title:'系统权限管理',icon:'el-icon-user'},
+  meta:{title:'系统权限管理', icon: 'user',roles: ['admin']},
   component: Layout,
   children: [
     {

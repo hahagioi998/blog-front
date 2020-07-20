@@ -20,13 +20,14 @@ import Layout from '@/layout'
 
 export default {
   path: '/category',
+  meta: {roles: ['admin']},
   component : Layout,
   children:[
     {
       path:'/category',
       name:'category',
       component: () => import('@/views/category/category'),
-      meta: {title: '栏目管理',icon: 'setting' }
+      meta: {title: '栏目管理',icon: 'setting' ,roles: ['admin']}
     },
   ]
 }

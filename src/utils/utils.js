@@ -1,7 +1,6 @@
-function resetForm(formName){
-  this.$refs[formName].resetFields();
+function TEST (formName){
 }
 
 export default {
-  resetForm,
+
 }
